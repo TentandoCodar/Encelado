@@ -9,14 +9,14 @@
         !empty($_POST['password'])
     ) {
         $user = new User();
-        $compare = $user -> login($_POST['email'], crypt($_POST['password'],'$2a$07$usesomesillystringforsalt$' ));
-        /*if($compare) {
-            echo "True";
+        $compare = $user -> login($_POST['email'],$_POST['password']);
+        if($compare) {
+            $_SESSION['user'] = true;
+            header('Location: posts.php');
         }
         else {
-            echo "False";
-        }*/
-        var_dump($compare);
+            header('Location: error.php');
+        }
     }
     else {
         header('Location: error.php');

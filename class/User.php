@@ -12,7 +12,7 @@
             $args = [$email];
             $prepare -> execute($args);
             $data = $prepare -> fetch();
-            $compare = hash_equals($password, $data['password']);
+            $compare = hash_equals(crypt($password, '$2a$07$usesomesillystringforsalt$'), $data['password']);
             return $compare;
         }
     }

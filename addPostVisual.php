@@ -1,3 +1,11 @@
+<?php 
+    session_start();
+    if(!$_SESSION['user']) {
+        header('Location: login.html');
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,17 +16,18 @@
 <body>
     <form action="addPost.php" method="POST">
         <label for="">Titulo</label>
-        <input>
+        <input name="title">
         <label for="">Descrição</label>
-        <input>
+        <input name="description">
         <label for="">Assunto</label>
-        <input>
+        <input name="subject">
         <label for="">Professor</label>
-        <input>
+        <input name="teacher">
         <label for="">URL</label>
-        <input>
+        <input name="URL">
         <label for="">Sala</label>
-        <input>
+        <input name="class">
+        <button type="submit" class="LoginButton">Adicionar</button>
     </form>
 </body>
 </html>

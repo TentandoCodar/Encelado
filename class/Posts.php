@@ -1,5 +1,5 @@
 <?php 
-    
+
 
     class Post {
         private $pdo;
@@ -18,6 +18,33 @@
                 return $data;
             }
             return null;
+        }
+
+        public function search($term = "title", $index) {
+            $db = $this -> pdo;
+            $sql = "SELECT * from posts where ".$term." like ?";
+            $prepare = $db -> prepare($sql);
+            $prepare -> execute(["%$index%"]);
+            $count = $prepare -> rowCount();
+            if($count != 0)  {
+                $data = $prepare -> fetchAll();
+                return $data;
+            }
+            return null;
+
+        }
+
+        public function create($title, $description, $subject, $teacher, $URL, $class) {
+            try {
+                $db = $this -> pdo;
+                $prepare = $db -> prepare("INSERT INTO posts (id, title, description, subjects, teacher, url, class) values (default,?,?,?,?,?,?)");
+                $args = [$title, $description, $subject, $teacher, $URL, $class];
+                echo "executar a query";
+                return $prepare -> execute($args);
+            }
+            catch(Exception $e) {
+                echo $e;
+            }
         }
 
     } 
