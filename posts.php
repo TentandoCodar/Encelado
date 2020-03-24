@@ -7,11 +7,11 @@
     require_once 'class/Posts.php';
     $post = new Post();
     $posts = [];
-    if(empty($_GET['Search'])) {
+    if(empty($_GET['Search']) && empty($_GET['Subject'])) {
         $posts = $post -> index();
     }
     else {
-        $posts = $post -> search($_GET['SearchOption'], $_GET['Search']);
+        $posts = $post -> search($_GET['Search'], $_GET['Subject']);
     }
 
     
@@ -30,11 +30,7 @@
     <form action="posts.php" method="get">
         <label>Pesquise:</label>
         <input name="Search">
-        <select  name="SearchOption">
-            <option value="title">Titulo</option>
-            <option value="subjects">Assunto</option>
-            <option value="teacher">Professor</option>
-        </select>
+        <input hidden name="Subject" value="<?php echo $_GET["Subject"];?>">
         <button>Pesquisar</button>
     </form>
     <?php 

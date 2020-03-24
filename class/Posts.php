@@ -20,11 +20,11 @@
             return null;
         }
 
-        public function search($term = "title", $index) {
+        public function search($term, $subject) {
             $db = $this -> pdo;
-            $sql = "SELECT * from posts where ".$term." like ?";
+            $sql = "SELECT * from posts where title like ? and subjects = ?";
             $prepare = $db -> prepare($sql);
-            $prepare -> execute(["%$index%"]);
+            $prepare -> execute(["%$term%", $subject]);
             $count = $prepare -> rowCount();
             if($count != 0)  {
                 $data = $prepare -> fetchAll();
