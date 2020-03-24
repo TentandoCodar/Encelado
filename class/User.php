@@ -1,13 +1,18 @@
 <?php
-    require '../env/Consts.php';
     class User {
-        $pdo;
+        private $pdo;
 
-        public __construct() {
+        public function __construct() {
             $this -> pdo = new PDO(DBCON, DBUSER, DBPASS);
         }
 
-        public login() {
-            
+        public function login($email, $password) {
+            $db = $this -> pdo;
+            $prepare = $db -> prepare("SELECT * FROM users where email=?");
+            $args = [$email];
+            $prepare -> execute($args);
+            $data = $prepare -> fetch();
+            $compare = hash_equals($password, $data['password']);
+            return $compare;
         }
     }
